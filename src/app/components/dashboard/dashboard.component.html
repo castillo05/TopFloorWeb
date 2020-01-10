@@ -1,0 +1,25 @@
+<div id="main-wrapper">
+  <app-header></app-header>
+
+  <app-sidebar></app-sidebar>
+
+  <div class="page-wrapper">
+    <div class="container-fluid">
+
+      <a  (click)="transferData()" class="btn btn-danger btn-lg">Trasferir Data</a>
+      <highcharts-chart
+      [Highcharts]="Highcharts"
+
+      [constructorType]="chartConstructor"
+      [options]="chartOptions"
+      [callbackFunction]="chartCallback"
+
+      [(update)]="updateFlag"
+      [oneToOne]="oneToOneFlag"
+      [runOutsideAngular]="runOutsideAngularFlag"
+
+      style="width: 100%; height: 400px; display: block;"
+      ></highcharts-chart>
+    </div>
+  </div>
+</div>
