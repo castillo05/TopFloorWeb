@@ -6,6 +6,13 @@
   <div class="page-wrapper">
     <div class="container-fluid">
 
+      <div *ngIf="enable" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{alert}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
       <a  (click)="transferData()" class="btn btn-danger btn-lg">Trasferir Data</a>
       <highcharts-chart
       [Highcharts]="Highcharts"

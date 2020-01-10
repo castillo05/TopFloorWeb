@@ -16,6 +16,8 @@ export class DashboardComponent implements OnInit {
   public identity;
   public agents:Agent[]=[];
   public agent:Agent;
+  public alert;
+  public enable:boolean=false;
 
   Highcharts: typeof Highcharts = Highcharts; // required
   chartConstructor: string = 'chart'; // optional string, defaults to 'chart'
@@ -72,7 +74,12 @@ export class DashboardComponent implements OnInit {
         if(!res){
           console.log('Error Interno');
         }else{
+          this.enable=true;
+          this.alert="Transfiriendo Datos..."
           console.log('Insertando Datos');
+          setInterval(()=>{
+            this.enable=false;
+          },3000);
         }
      });
    }

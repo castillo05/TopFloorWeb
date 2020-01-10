@@ -10,6 +10,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import {  HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './components/shared/header/header.component';
 import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SidebarComponent } from './components/shared/sidebar/sidebar.component'
     SingupComponent,
     DashboardComponent,
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

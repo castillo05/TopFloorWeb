@@ -1,3 +1,4 @@
+import { RegisterComponent } from './components/register/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 
@@ -9,7 +10,8 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 const routes: Routes = [
   {path:'login',component:LoginComponent},
-  {path:'dashboard', component: DashboardComponent}
+  {path:'dashboard', component: DashboardComponent},
+  {path:'register', component:RegisterComponent}
 ];
 
 @NgModule({

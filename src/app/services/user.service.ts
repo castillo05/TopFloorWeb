@@ -1,6 +1,6 @@
+import { User } from './../models/user.model';
 import { Global } from './global';
 import { Injectable, Inject } from '@angular/core';
-import {User} from '../models/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -26,6 +26,17 @@ export class UserService {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
     return this.http.post(this.urlBase+'singin',params,{headers});
+   }
+
+   singup(user: User){
+
+
+     const json = JSON.stringify(user);
+     const params = json;
+     const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+     return this.http.post(this.urlBase+'singup',params,{headers});
+
    }
 
     // Obtener Token y Identity
