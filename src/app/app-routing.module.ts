@@ -9,9 +9,11 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 
 const routes: Routes = [
+  {path:'',component:LoginComponent},
   {path:'login',component:LoginComponent},
   {path:'dashboard', component: DashboardComponent},
-  {path:'register', component:RegisterComponent}
+  {path:'register', component:RegisterComponent},
+  {path:'**', component:RegisterComponent}
 ];
 
 @NgModule({
