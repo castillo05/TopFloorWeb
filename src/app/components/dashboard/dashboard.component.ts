@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import * as Highcharts from 'highcharts';
 import { AgentsService } from 'src/app/services/agents.service';
-
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,30 +19,32 @@ export class DashboardComponent implements OnInit {
   public alert;
   public enable:boolean=false;
 
-  Highcharts: typeof Highcharts = Highcharts; // required
-  chartConstructor: string = 'chart'; // optional string, defaults to 'chart'
-  chartOptions: Highcharts.Options = {
-    series: [
-    {
-      data: [
-        10
-      ],
-      type: 'spline',
-      color:'red'
-    }
-  ],
-  title: {
-    text: "Estadisticas de Agentes"
- },
- xAxis:{
-  categories:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-}
-   }; // required
-  chartCallback: Highcharts.ChartCallbackFunction = function (chart) {} // optional function, defaults to null
-  updateFlag: boolean = false; // optional boolean
-  oneToOneFlag: boolean = true; // optional boolean, defaults to false
-  runOutsideAngular: boolean = false; // optional boolean, defaults to false
+  public options: any = {
+    chart: {
+      type: 'column',
+      height: 450
+    },
+    title: {
+      text: 'Grafica de Agentes'
+    },tooltip: {
 
+    },
+    xAxis:{
+        categories:[]
+      },
+    credits: {
+      enabled: false
+    },
+    series: [
+      {
+        name: 'Comisiones',
+        turboThreshold: 500000,
+        data: []
+      }
+    ]
+  }
+
+subscription: Subscription;
   constructor(private userService: UserService, private route: Router, private agentsService:AgentsService) {
     this.token = this.userService.getToken();
     this.identity= this.userService.getIdentity();
@@ -51,22 +53,25 @@ export class DashboardComponent implements OnInit {
     if(!this.identity){
       this.route.navigate(['/login']);
     }
-
    }
 
    getDataAgents(){
-     this.agentsService.getAgents(this.token).subscribe((res:any)=>{
-        if(res.agents){
-          this.agents=res.agents;
-          this.agents.forEach(element => {
-            this.agent=element;
-            console.log(this.agent.agentCommission);
+    this.agentsService.getAgents(this.token).subscribe((data:any) => {
+      const updated_normal_data = [];
+      const name_agent=[];
+      this.agents=data.agents;
+      this.agents.forEach(row => {
+        updated_normal_data.push(row.agentCommission);
+        name_agent.push(row.agentName);
+        this.options.xAxis.categories=name_agent;
+      });
+      this.options.series[0]['data'] = updated_normal_data;
 
-          });
-        }
-     },error=>{
-
-     })
+      Highcharts.chart('container', this.options);
+    },
+    error => {
+      console.log('Something went wrong.');
+    })
    }
 
    transferData(){
@@ -85,7 +90,14 @@ export class DashboardComponent implements OnInit {
    }
 
   ngOnInit() {
+
+    const source = interval(10000);
+    const trasf=interval(10500);
     this.getDataAgents();
+    source.subscribe(v=>this.transferData());
+    trasf.subscribe(val=>this.getDataAgents());
+
+
   }
 
 }
