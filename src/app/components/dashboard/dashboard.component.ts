@@ -90,12 +90,14 @@ subscription: Subscription;
    }
 
   ngOnInit() {
+    if(this.identity && this.token){
+        const source = interval(10000);
+        const trasf=interval(10500);
+        this.getDataAgents();
+        source.subscribe(v=>this.transferData());
+        trasf.subscribe(val=>this.getDataAgents());
+    }
 
-    const source = interval(10000);
-    const trasf=interval(10500);
-    this.getDataAgents();
-    source.subscribe(v=>this.transferData());
-    trasf.subscribe(val=>this.getDataAgents());
 
 
   }

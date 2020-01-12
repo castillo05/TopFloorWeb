@@ -18,6 +18,10 @@ export class RegisterComponent implements OnInit {
     this.token= this.UserService.getToken();
     this.identity=this.UserService.getIdentity();
     this.user=new User('','','','','',false);
+
+    if(this.identity){
+      this.route.navigate(['dashboard']);
+    }
   }
 
   ngOnInit() {

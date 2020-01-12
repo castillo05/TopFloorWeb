@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit {
       this.identity = null;
       this.token = null;
       this.route.navigate(['login']);
+      location.reload();
    }
 
 
